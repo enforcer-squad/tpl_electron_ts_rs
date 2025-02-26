@@ -7,6 +7,7 @@ const createWindow = () => {
     webPreferences: {
     },
   });
+  
 };
 
 app.whenReady().then(() => {
