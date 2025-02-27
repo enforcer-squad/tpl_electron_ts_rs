@@ -47,17 +47,18 @@ const compileMain = async () => {
           //   throw new Error("Error occured in main process");
           return;
         }
-        // console.log(2323232,stats?.toString());
+        console.log(stats?.toString());
         // spinner.succeed("编译main成功");
-        // if (electronProcess && electronProcess.kill) {
-        //     manualRestart = true;
-        //     process.kill(electronProcess.pid);
-        //     electronProcess = null;
-        //     startElectron();
-        //     setTimeout(() => {
-        //       manualRestart = false;
-        //     }, 5000);
-        //   }
+        
+        if (electronProcess && electronProcess.kill) {
+            // manualRestart = true;
+            process.kill(electronProcess.pid);
+            electronProcess = null;
+            startElectron();
+            // setTimeout(() => {
+            //   manualRestart = false;
+            // }, 5000);
+          }
         resolve(0);
       }
     );
@@ -65,14 +66,12 @@ const compileMain = async () => {
 };
 
 const startElectron = async () => {
-  const mainPath = resolve(rootDir, "dist/main/index.js");
+  const mainPath = resolve(rootDir, "dist/app/index.js");
   if (!existsSync(mainPath)) {
     console.log(chalk.red(`错误: 文件不存在: ${mainPath}`));
     process.exit(1);
   }
-  
-  // 确保使用字符串，而不是变量
-  const electronProcess = spawn('electron', [mainPath]);
+  electronProcess = spawn('electron', [mainPath]);
   
   electronProcess.stdout.on("data", (data) => {
     console.log(data.toString());
@@ -80,9 +79,10 @@ const startElectron = async () => {
   electronProcess.stderr.on("data", (data) => {
     console.log(chalk.red(data.toString()));
   });
-  electronProcess.on("exit", (e) => {
-    console.log("[main exit]");
-  });
+//   正常情况下，electron进程先exit再close
+//   electronProcess.on("exit", (e) => {
+//     console.log(chalk.green("electron进程已退出"));
+//   });
   electronProcess.on("close", (code) => {
     console.log(chalk.green(`electron进程已关闭, 退出码: ${code}`));
   });
@@ -101,7 +101,7 @@ const start = async () => {
   //   await startMain();
   //   console.timeEnd('dev');
   await compileMain();
-//   await startElectron();
+  await startElectron();
   //   await startElectron();
 };
 

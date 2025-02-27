@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx build/start.ts",
-    
-    "start": "electron test.js"
+    "dev": "tsx build/start.ts"
   },
   "keywords": [],
   "author": "",

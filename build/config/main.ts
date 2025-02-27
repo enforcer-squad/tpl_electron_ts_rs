@@ -1,5 +1,4 @@
 import {resolve} from "node:path";
-import { fileURLToPath } from 'node:url';
 import { defineConfig } from "@rspack/cli";
 import rspack from "@rspack/core";
 import { rootDir } from "../tools";
@@ -12,11 +11,11 @@ const mainConfig = (isDev: boolean, envConfig: Record<string, string>) => {
     mode: isDev ? "development" : "production",
     entry: {
       index: resolve(rootDir, "src/main/index.ts"),
-    //   preload: resolve(rootDir, "src/main/preload.ts"),
+      preload: resolve(rootDir, "src/main/preload.ts"),
     },
     output: {
       clean: true,
-      path: resolve(rootDir, "dist/main"),
+      path: resolve(rootDir, "dist/app"),
       filename: "[name].js",
     },
     resolve: {
@@ -26,9 +25,6 @@ const mainConfig = (isDev: boolean, envConfig: Record<string, string>) => {
       extensions: [".ts", ".mjs", ".js", ".json", ".node"],
       tsConfig: resolve(rootDir, "tsconfig.json"),
     },
-    // externals: {
-    //   electron: "electron",
-    // },
     optimization: {
       minimize: !isDev,
     },
@@ -59,6 +55,14 @@ const mainConfig = (isDev: boolean, envConfig: Record<string, string>) => {
     plugins: [
       new rspack.DefinePlugin({
         ...envConfig
+      }),
+      new rspack.CopyRspackPlugin({
+        patterns: [
+          {
+            from: resolve(rootDir,'src/public'),
+            to: resolve(rootDir, "dist"),
+          },
+        ],
       }),
     ],
   });
