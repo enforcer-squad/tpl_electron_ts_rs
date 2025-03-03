@@ -20,9 +20,9 @@ const startRenderer = async () => {
 };
 
 const compileMain = async () => {
-//   const spinner = ora().start();
-//   spinner.color = "yellow";
-//   spinner.text = chalk.yellow("编译main...");
+  //   const spinner = ora().start();
+  //   spinner.color = "yellow";
+  //   spinner.text = chalk.yellow("编译main...");
   //   await sleep(2000);
 
   return new Promise((resolve, reject) => {
@@ -36,7 +36,7 @@ const compileMain = async () => {
         aggregateTimeout: 300,
         poll: undefined,
       },
-      (err: any, stats) => {
+      async (err: any, stats) => {
         if (err || (stats && stats.hasErrors())) {
           console.log(chalk.red("error:"), err?.stack || err);
           if (err?.details) {
@@ -49,16 +49,19 @@ const compileMain = async () => {
         }
         console.log(stats?.toString());
         // spinner.succeed("编译main成功");
-        
+
         if (electronProcess && electronProcess.kill) {
-            // manualRestart = true;
-            process.kill(electronProcess.pid);
-            electronProcess = null;
-            startElectron();
-            // setTimeout(() => {
-            //   manualRestart = false;
-            // }, 5000);
-          }
+          manualRestart = true;
+          const processClosePromise = new Promise<void>((resolveClose) => {
+            electronProcess.once("close", () => {
+              resolveClose();
+            });
+          });
+          process.kill(electronProcess.pid);
+          await processClosePromise;
+          electronProcess = null;
+          startElectron();
+        }
         resolve(0);
       }
     );
@@ -71,29 +74,33 @@ const startElectron = async () => {
     console.log(chalk.red(`错误: 文件不存在: ${mainPath}`));
     process.exit(1);
   }
-  electronProcess = spawn('electron', [mainPath]);
-  
+  electronProcess = spawn("electron", [mainPath]);
+  // 有没有监听启动成功的事件？
+  electronProcess.on("spawn", () => {
+    console.log(chalk.green(`electron进程[${electronProcess.pid}]已启动`));
+  });
   electronProcess.stdout.on("data", (data) => {
     console.log(data.toString());
   });
   electronProcess.stderr.on("data", (data) => {
     console.log(chalk.red(data.toString()));
   });
-//   正常情况下，electron进程先exit再close
-//   electronProcess.on("exit", (e) => {
-//     console.log(chalk.green("electron进程已退出"));
-//   });
+  // //   正常情况下，electron进程先exit再close
+  // electronProcess.on("exit", (e) => {
+  //   console.log(chalk.yellow("electron进程已退出"));
+  // });
   electronProcess.on("close", (code) => {
-    console.log(chalk.green(`electron进程已关闭, 退出码: ${code}`));
+    console.log(chalk.yellow(`electron进程[${electronProcess.pid}]已关闭, 退出码: ${code}`));
+    if (manualRestart) {
+      manualRestart = false;
+    } else {
+      process.exit(0);
+    }
   });
   electronProcess.on("error", (err) => {
     console.log(chalk.red(`electron进程启动失败: ${err}`));
+    process.exit(1);
   });
-  //   const spinner = ora().start();
-  //   spinner.color = "yellow";
-  //   spinner.text = chalk.yellow("启动electron...");
-  //   await sleep(2000);
-  //   spinner.succeed("启动electron成功");
 };
 const start = async () => {
   //   console.time('dev');
