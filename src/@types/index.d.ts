@@ -2,6 +2,7 @@ declare namespace NodeJS {
   export interface ProcessEnv {
     API_PATH: string;
     TIME_OUT: number;
+    NODE_ENV: 'development' | 'production';
   }
 }
 

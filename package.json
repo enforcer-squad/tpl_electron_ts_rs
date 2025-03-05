@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "husky",
     "fix": "electron-fix start",
-    "dev": "tsx build/start.ts"
+    "dev": "cross-env NODE_ENV=development tsx build/start.ts"
   },
   "engines": {
     "node": ">=20.0.0",
