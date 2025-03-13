@@ -1,6 +1,6 @@
 import { Radio } from 'antd';
 import type { RadioChangeEvent } from 'antd/es/radio';
-import appModel, { filters } from '@/store/app';
+import appModel, { filters } from '@renderer/store/app';
 import { useModel,reactiveMemo } from '@enforcer-squad/rex';
 
 const FilterRow = () => {

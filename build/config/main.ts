@@ -18,7 +18,7 @@ const mainConfig = (isDev: boolean, envConfig: Record<string, string>) => {
     },
     resolve: {
       alias: {
-        '@': resolveRootDir('src'),
+        '@main': resolveRootDir('src/main'),
       },
       extensions: ['.ts', '.mjs', '.js', '.json', '.node'],
       tsConfig: resolveRootDir('tsconfig.json'),
@@ -30,7 +30,7 @@ const mainConfig = (isDev: boolean, envConfig: Record<string, string>) => {
       rules: [
         {
           test: /\.ts[x]?$/,
-          include: [resolveRootDir('src')],
+          include: [resolveRootDir('src/main')],
           use: [
             {
               loader: 'builtin:swc-loader',
@@ -46,6 +46,7 @@ const mainConfig = (isDev: boolean, envConfig: Record<string, string>) => {
         },
         {
           test: /\.(png|jpg|jpeg|gif|svg)$/,
+          include: [resolveRootDir('src/main')],
           type: 'asset/resource',
         },
       ],
@@ -54,14 +55,14 @@ const mainConfig = (isDev: boolean, envConfig: Record<string, string>) => {
       new rspack.DefinePlugin({
         ...envConfig,
       }),
-      new rspack.CopyRspackPlugin({
-        patterns: [
-          {
-            from: resolveRootDir('src/public'),
-            to: resolveRootDir('dist'),
-          },
-        ],
-      }),
+      // new rspack.CopyRspackPlugin({
+      //   patterns: [
+      //     {
+      //       from: resolveRootDir('src/public'),
+      //       to: resolveRootDir('dist'),
+      //     },
+      //   ],
+      // }),
     ],
   });
 };

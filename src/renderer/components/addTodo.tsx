@@ -1,6 +1,6 @@
 import {  useState, type ChangeEvent } from 'react';
 import { Input, Button } from 'antd';
-import appModel from '@/store/app';
+import appModel from '@renderer/store/app';
 import { useModel,reactiveMemo } from '@enforcer-squad/rex';
 
 const AddTodo = () => {

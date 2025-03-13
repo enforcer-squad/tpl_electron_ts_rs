@@ -1,5 +1,5 @@
-import { client } from '@/utils';
-import type { LoginParams, User } from '@/services/types/user';
+import { client } from '@renderer/utils';
+import type { LoginParams, User } from '@renderer/services/types/user';
 
 const login = (params: LoginParams): Promise<User> =>
   client({

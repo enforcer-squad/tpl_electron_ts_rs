@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @renderertypescript-eslint/no-misused-promises */
 import { useModel } from '@enforcer-squad/rex';
-import { intl } from '@/utils/index';
-import userModel from '@/store/user';
+import { intl } from '@renderer/utils/index';
+import userModel from '@renderer/store/user';
 
 const test = {
   name: 'txdoctor1',

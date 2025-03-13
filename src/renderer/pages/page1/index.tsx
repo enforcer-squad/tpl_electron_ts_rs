@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @renderertypescript-eslint/no-misused-promises */
 import { useState } from 'react';
-import FilterRow from '@/components/filterRow';
-import AddTodo from '@/components/addTodo';
-import TodoList from '@/components/todoList';
-import { intl } from '@/utils/index';
+import FilterRow from '@renderer/components/filterRow';
+import AddTodo from '@renderer/components/addTodo';
+import TodoList from '@renderer/components/todoList';
+import { intl } from '@renderer/utils/index';
 import { useModel } from '@enforcer-squad/rex';
-import userModel from '@/store/user';
+import userModel from '@renderer/store/user';
 import style from './index.less';
 
 const Index = () => {

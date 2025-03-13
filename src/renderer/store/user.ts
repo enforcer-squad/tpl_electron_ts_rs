@@ -1,6 +1,6 @@
-import type { LoginParams } from '@/services/types/user';
+import type { LoginParams } from '@renderer/services/types/user';
 import { createModel, devtools } from '@enforcer-squad/rex';
-import { checkLogin, login, logout } from '@/services/user';
+import { checkLogin, login, logout } from '@renderer/services/user';
 
 export interface User {
   name: string;

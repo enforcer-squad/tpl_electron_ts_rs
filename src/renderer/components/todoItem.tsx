@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { Checkbox } from 'antd';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-import appModel, { type Todo } from '@/store/app';
+import appModel, { type Todo } from '@renderer/store/app';
 import { useModel,reactiveMemo } from '@enforcer-squad/rex';
 
 interface PropTypes {

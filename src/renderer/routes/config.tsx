@@ -1,10 +1,10 @@
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 
-const Login = lazy(() => import('@/pages/login/index'));
-const Layout = lazy(() => import('@/pages/layout/index'));
-const Page1 = lazy(() => import('@/pages/page1/index'));
-const Page2 = lazy(() => import('@/pages/page2/index'));
+const Login = lazy(() => import('@renderer/pages/login/index'));
+const Layout = lazy(() => import('@renderer/pages/layout/index'));
+const Page1 = lazy(() => import('@renderer/pages/page1/index'));
+const Page2 = lazy(() => import('@renderer/pages/page2/index'));
 
 const routes = (role?: number) => [
   {

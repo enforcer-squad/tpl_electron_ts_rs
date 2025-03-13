@@ -1,5 +1,5 @@
-import type { Todo } from '@/store/app';
-import appModel from '@/store/app';
+import type { Todo } from '@renderer/store/app';
+import appModel from '@renderer/store/app';
 import { useModel } from '@enforcer-squad/rex';
 import memoize from 'fast-memoize';
 

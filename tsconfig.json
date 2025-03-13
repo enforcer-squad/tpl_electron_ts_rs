@@ -12,7 +12,7 @@
     "paths": {
       "@/*": ["src/*"] // 路径别名，可以使用@/来引用src目录下的文件
     },
-    "typeRoots": ["node_modules/@types", "src/@types"], // 类型声明文件的根目录
+    "typeRoots": ["node_modules/@types", "src/@types", "src/types"], // 类型声明文件的根目录
     "types": ["node"], // 要包含的类型声明文件包名称列表
 
     /* 模块配置 */

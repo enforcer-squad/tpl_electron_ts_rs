@@ -2,8 +2,8 @@ import type { FC } from 'react';
 import { useRoutes, BrowserRouter } from 'react-router-dom';
 import routes from './config';
 import { useModel } from '@enforcer-squad/rex';
-import userModel from '@/store/user';
-import { useSuspense } from '@/utils';
+import userModel from '@renderer/store/user';
+import { useSuspense } from '@renderer/utils';
 
 interface PropTypes {
   role: number | undefined;

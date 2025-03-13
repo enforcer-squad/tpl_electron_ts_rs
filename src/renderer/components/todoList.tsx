@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import TodoItem from '@/components/todoItem';
-import { useTodos } from '@/store/selectors';
+import TodoItem from '@renderer/components/todoItem';
+import { useTodos } from '@renderer/store/selectors';
 import { reactiveMemo } from '@enforcer-squad/rex';
 
 const TodoList = () => {

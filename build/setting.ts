@@ -1,3 +1,5 @@
+import type { RspackDevServerOptions } from '@rspack/cli';
+
 const Targets = ['chrome >= 49', 'edge >= 88'];
 
 const Polyfill = {
@@ -6,7 +8,7 @@ const Polyfill = {
   targets: Targets,
 };
 
-const DevServer = {
+const DevServer: RspackDevServerOptions = {
   client: {
     logging: 'info',
     overlay: true,
